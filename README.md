@@ -18,7 +18,8 @@ pip install rapidminer-go-python
   
       b. ScoreController.py
       
-        Used when getting predictions from a model that is deployed on RapidMiner GO, when you want to consume in Tableau Prep /Studio or Server
+        Used when getting predictions from a model that is deployed on RapidMiner GO.
+        These predictions are then consumed in Tableau Prep, Tableau Desktop and  Server
   
       c. TrainController.py
       
