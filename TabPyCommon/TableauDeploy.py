@@ -1,10 +1,5 @@
 from tabpy_client import Client
-import os
-import sys
-from rapidminer_go_python import rapidminergoclient as amw
 import importlib
-from pandas.io.json import json_normalize
-
 
 TASK_STATE = 'state'
 CRITERIA = 'performance'
@@ -18,39 +13,65 @@ DEPLOYMENT_ID = 'DeploymentID'
 STATUS = 'Deployment_Status'
 MODEL = 'Deployed_Model'
 depID = ''
-
+AUTODEPLOY = False
 client = ''
 
 tabclient = Client('http://localhost:9004/')
 #new update
-def connection(go_url, gouser, gopassword):
+
+def rapidminer_quick_autommodel(go_url, gouser, gopassword, input_data, label, platform):
+    print('URL:'+go_url)
+    from rapidminer_go_python import rapidminergoclient as amw
+    LABEL_ATTRIBUTE = label
+    # To refresh the changes made in AutoModelWeb
+    #sys.path.append(os.path.dirname('C:/CodeBase/rapidminer-go-python/mar06/rapidminer_go_python'))
+    #import rapidminergoclient as amw
+
+
+    # To refresh the changes made in AutoModelWeb
+    importlib.reload(amw)
+
     # To get the AMW instance
-    global client
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
 
-def rapidminer_quick_autommodel(go_url, gouser, gopassword, input_data, label):
-    from rapidminer_go_python import rapidminergoclient as amw
-    client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
-    data = json_normalize(input_data)
-    return client.quick_automodel(data,label)
+    data = client.convert_json_to_dataframe(input_data)
+    trainingResult = client.quick_automodel(data,label,AUTODEPLOY)
+
+    if platform == 'tabprep':
+        return trainingResult
+
+    prediction = []
+
+    # Number of records in input
+    max_data_length = len(data.index)
+
+    # Adding survived to a list
+    for i in range(0, max_data_length):
+        prediction.append(data.iloc[i][label])
+
+    print('returning result')
+    return prediction
 
 def rapidminerTrain(go_url, gouser, gopassword, input_data, label, platform):
-    LABEL_ATTRIBUTE = label
-   # To refresh the changes made in AutoModelWeb
+
     from rapidminer_go_python import rapidminergoclient as amw
+    LABEL_ATTRIBUTE = label
+
+   # To refresh the changes made in AutoModelWeb
+    #sys.path.append(os.path.dirname('C:/CodeBase/rapidminer-go-python/mar06/rapidminer_go_python'))
+    #import rapidminergoclient as amw
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
     # To get the AMW instance
     #connection(go_url, gouser, gopassword)
 
-
-    data = json_normalize(input_data)
+    data = client.convert_json_to_dataframe(input_data)
 
     # dataframe to json
-    responseJSON = client.add_dataFrame(data)
-    dataId = responseJSON[DATA_ID]
+    dataId = client.add_dataFrame(data)[DATA_ID]
 
-    modelingTask = client.create_modeling_task(dataId)
-    modelingTaskID = modelingTask[DATA_ID]
+
+    modelingTaskID = client.create_modeling_task(dataId)[DATA_ID]
+
 
     # setting label
     client.set_label(modelingTaskID, LABEL_ATTRIBUTE)
@@ -60,25 +81,18 @@ def rapidminerTrain(go_url, gouser, gopassword, input_data, label, platform):
 
     # Initiating model training
     client.start_execution(modelingTaskID)
-    flag = True
     print('ExecutingModel...')
     # Loops till all the task are completed
-    while (flag):
-        flag = False
-        r = client.get_modeling_execution(modelingTaskID)
-        states = map(lambda x: x[TASK_STATE], r)
-        for state in states:
-            if (str(state).strip() not in COMPLETE_STATUS):
-                flag = True
+    #client.wait_till_execution_completion(modelingTaskID)
 
-    print('Model Execution Completed')
+    #print('Model Execution Completed')
 
     # Obtaining the trained model results
-    result = client.get_execution_result(modelingTaskID)
+    client.get_execution_result(modelingTaskID)
 
     # To find the best model**add or remove features if needed to get a value of more or less deep rooted in Json*
-    features = [CRITERIA, SUB_CRITERIA, PARAM]
-    bestModel = client.determine_best_model(features)
+    bestmodelselectioncriteria = [CRITERIA, SUB_CRITERIA, PARAM]
+    bestModel = client.determine_best_model(bestmodelselectioncriteria)
 
     # Deploying the best model
     global depID
@@ -89,20 +103,11 @@ def rapidminerTrain(go_url, gouser, gopassword, input_data, label, platform):
 
     # Binding DeploymentID, Status and Best Model together in a dictionary to return as a output
     out_result = {DEPLOYMENT_ID: depID, STATUS: status, MODEL: bestModel}
-    final_out = json_normalize(out_result)
+    final_out = client.convert_json_to_dataframe(out_result)
     print('DeploymentID:' + str(depID))
 
     if platform == 'tabprep':
         return out_result
-
-   # if platform == 'interactive':
-   #     modelInputs = jsonVal['modelInputs']
-
-        # To find the best model**add or remove features if needed to get a value of more or less deep rooted in Json*
-   #     features = [CRITERIA, SUB_CRITERIA]
-   #     jsontoDf = client.resultPerformancePercentageView(features)
-   #     out_result = ({'Input:': modelInputs, 'FinalMetrics':jsontoDf})
-   #     return out_result
 
     prediction = []
 
@@ -117,10 +122,12 @@ def rapidminerTrain(go_url, gouser, gopassword, input_data, label, platform):
     print('returning result')
     return prediction
 
-def rapidminerScore(go_url, gouser, gopassword, jsonData, label, depID):
+def rapidminerScore(go_url, gouser, gopassword, inputScoreData, label, depID):
+    from rapidminer_go_python import rapidminergoclient as amw
     print("URL is " + go_url)
     global client
-    from rapidminer_go_python import rapidminergoclient as amw
+    #sys.path.append(os.path.dirname('C:/CodeBase/rapidminer-go-python/mar06/rapidminer_go_python'))
+    #import rapidminergoclient as amw
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
 
     print('Inside Score Method, DeploymentID'+str(depID))
@@ -128,11 +135,11 @@ def rapidminerScore(go_url, gouser, gopassword, jsonData, label, depID):
 
 
     # passing the test data to deployed model to score
-    scoreResult = client.score(jsonData, depID)
+    scoreResult = client.score(inputScoreData, depID)
 
     # converting result json to dataframe
-    result = json_normalize(scoreResult['data'])
-    req = json_normalize(jsonData)
+    result = client.convert_json_to_dataframe(scoreResult['data'])
+    req = client.convert_json_to_dataframe(inputScoreData)
     # req.is_copy = True
 
     # List to add the result data
@@ -150,23 +157,22 @@ def rapidminerScore(go_url, gouser, gopassword, jsonData, label, depID):
 
 
 
-def rapidminerTrainAndScore(gouser, gopassword, dataId, jsonData, label, platform):
+def rapidminerTrainAndScore(go_url, gouser, gopassword, input_train_data, input_score_data, label, platform):
     # List to add the result data
-    from rapidminer_go_python import rapidminergoclient as amw
     prediction = []
 
-    prediction.extend(rapidminerTrain(gouser, gopassword, dataId, label, platform))
+    prediction.extend(rapidminerTrain(go_url, gouser, gopassword, input_train_data, label, platform))
 
-    prediction.extend(rapidminerScore(gouser, gopassword, jsonData, label, depID))
+    prediction.extend(rapidminerScore(go_url, gouser, gopassword, input_score_data, label, depID))
     print('returning result')
     return prediction
 
 
 
 print('Deploying Quick Model')
-tabclient.deploy('rapidminer_quick_autommodel',
+tabclient.deploy('Rapidminer_Quick_Automodel',
               rapidminer_quick_autommodel,
-              'Trains a model for  predictions', override=True)
+              'Quickly Trains a model for predictions', override=True)
 
 print('Deploying Training and Score')
 tabclient.deploy('RapidMinerTrainAndScore',
@@ -184,4 +190,4 @@ tabclient.deploy('RapidMinerScore',
 print('Deploying Training Function ')
 tabclient.deploy('RapidMinerTrain',
               rapidminerTrain,
-              'Trains and returns the id of deployed best model', override=True)
+              'Trains a model for predictions', override=True)

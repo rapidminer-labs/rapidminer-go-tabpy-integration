@@ -28,7 +28,6 @@
             <column datatype='integer' name='Siblings' ordinal='5' />
             <column datatype='integer' name='Parents' ordinal='6' />
             <column datatype='real' name='Fair' ordinal='7' />
-            <column datatype='string' name='Flag' ordinal='8' />
           </columns>
         </relation>
         <metadata-records>
@@ -145,40 +144,31 @@
             <aggregation>Sum</aggregation>
             <contains-null>true</contains-null>
           </metadata-record>
-          <metadata-record class='column'>
-            <remote-name>Flag</remote-name>
-            <remote-type>129</remote-type>
-            <local-name>[Flag]</local-name>
-            <parent-name>[Titanic Training.csv]</parent-name>
-            <remote-alias>Flag</remote-alias>
-            <ordinal>8</ordinal>
-            <local-type>string</local-type>
-            <aggregation>Count</aggregation>
-            <scale>1</scale>
-            <width>1073741823</width>
-            <contains-null>true</contains-null>
-            <collation flag='0' name='LEN_RUS' />
-          </metadata-record>
         </metadata-records>
       </connection>
       <aliases enabled='yes' />
+      <column caption='QuickTrain' datatype='string' name='[Calculation_1924725917076062209]' role='measure' type='nominal'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;AUTOMODEL_URL = &apos;https://go-develop.rapidminer.com&apos;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;dataId = json.loads(responseJSON)&#13;&#10;print(data)&#13;&#10;&#13;&#10;returnResult = tabclient.query(&apos;Rapidminer_Quick_Automodel&apos;, AUTOMODEL_URL, &apos;vsivakumar@rapidminer.com&apos;,&apos;wXv2jBF&amp;v2Nm&apos;, dataId, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(returnResult[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+          <table-calc ordering-type='Rows' />
+        </calculation>
+      </column>
       <column caption='TitanicPredict' datatype='string' name='[Calculation_2361856543278223360]' role='measure' type='nominal'>
         <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;sys.path.insert(0, os.path.abspath(&apos;C:/Users/VenkateshkumarSivaku/pycharm/Task1&apos;))&#13;&#10;import automodelweb as amw&#13;&#10;import time&#13;&#10;import importlib&#13;&#10;import json&#13;&#10;from pandas.io.json import json_normalize&#13;&#10;import tabpy&#13;&#10;&#13;&#10;LABEL_ATTRIBUTE = &apos;Survived&apos;&#13;&#10;TASK_STATE = &apos;state&apos;&#13;&#10;FEATURE = &apos;performance&apos;&#13;&#10;SUB_FEATURE = &apos;percentages&apos;&#13;&#10;PARAM = &apos;accuracy&apos;&#13;&#10;FINISHED_STATUS = &apos;FINISHED&apos;&#13;&#10;DATA_ID = &apos;id&apos;&#13;&#10;DEPLOYMENT_ID = &apos;DeploymentID&apos;&#13;&#10;STATUS = &apos;Deployment_Status&apos;&#13;&#10;MODEL = &apos;Deployed_Model&apos;&#13;&#10;&#13;&#10;AUTOMODEL_URL = &apos;https://aicloud-develop.rapidminer.com&apos;&#13;&#10;USER_ID = &apos;vsivakumar@rapidminer.com&apos;&#13;&#10;PASSWORD = &apos;wXv2jBF&amp;v2Nm&apos;&#13;&#10;&#13;&#10;PREDICTION = &apos;prediction(Survived)&apos;&#13;&#10;depID = &apos;52601642-a69f-4ecb-8b86-1ce345fad436&apos;&#13;&#10;&#13;&#10;# To refresh the changes made in AutoModelWeb&#13;&#10;importlib.reload(amw)&#13;&#10;&#13;&#10;# To get the AMW instance&#13;&#10;client = amw.AutomodelWeb(AUTOMODEL_URL, USER_ID, PASSWORD)&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;  &#13;&#10;data = pd.DataFrame({&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;:Parents, &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset = [&apos;Survived&apos;])&#13;&#10;&#13;&#10;test = pd.DataFrame({&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;:Parents, &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;#test = test.reset_index(drop=True)&#13;&#10;&#13;&#10;print(&apos;training&apos;)&#13;&#10;print(data)&#13;&#10;print(&apos;test&apos;)&#13;&#10;print(test)&#13;&#10;&#13;&#10;#dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonData = json.loads(jd)&#13;&#10;&#13;&#10;#dataframe to json&#13;&#10;responseJSON = client.add_dataFrame(data)&#13;&#10;dataId = responseJSON[DATA_ID]&#13;&#10;&#13;&#10;&#13;&#10;modelingTask = client.create_modeling_task(dataId)&#13;&#10;modelingTaskID = modelingTask[DATA_ID]&#13;&#10;&#13;&#10;#setting label&#13;&#10;client.set_label(modelingTaskID, LABEL_ATTRIBUTE)&#13;&#10;client.set_class_interest(modelingTaskID, &apos;Yes&apos;, &apos;No&apos;)&#13;&#10;client.set_cost_matrix(modelingTaskID, [[1, -1], [-1, 1]])&#13;&#10;print(&apos;TaskID:&apos; + modelingTaskID)&#13;&#10;&#13;&#10;#Initiating model training&#13;&#10;client.start_execution(modelingTaskID)&#13;&#10;flag = True&#13;&#10;&#13;&#10;#Loops till all the task are completed&#13;&#10;while (flag):&#13;&#10;&#9;flag = False&#13;&#10;&#9;r = client.get_modeling_execution(modelingTaskID)&#13;&#10;&#9;states = map(lambda x: x[TASK_STATE], r)&#13;&#10;&#9;for state in states:&#13;&#10;&#9;&#9;if str(state).strip() != FINISHED_STATUS:&#13;&#10;&#9;&#9;&#9;print(state)&#13;&#10;&#9;&#9;&#9;flag = True&#13;&#10;&#13;&#10;#Obtaining the trained model results&#13;&#10;result = client.get_execution_result(modelingTaskID)&#13;&#10;&#13;&#10;#To find the best model**add or remove features if needed to get a value of more or less deep rooted in Json*&#13;&#10;features = [FEATURE, SUB_FEATURE, PARAM]&#13;&#10;bestModel = client.determine_best_model(features)&#13;&#10;&#13;&#10;#Deploying the best model&#13;&#10;deploymentID = client.deploy_model(modelingTaskID, bestModel)&#13;&#10;status = &apos;Failed&apos;&#13;&#10;if str(deploymentID) != &apos;&apos;:&#13;&#10;&#9;status = &apos;Success&apos;&#13;&#10;&#13;&#10;#Binding DeploymentID, Status and Best Model together in a dictionary to return as a output&#13;&#10;out_result = {DEPLOYMENT_ID: deploymentID, STATUS: status, MODEL: bestModel}&#13;&#10;final_out = json_normalize(out_result)&#13;&#10;print(&apos;DeploymentID:&apos;+str(deploymentID))&#13;&#10;depID = deploymentID&#13;&#10;&#13;&#10;print(&apos;Start to score&apos;)&#13;&#10;#passing the test data to deployed model to score&#13;&#10;scoreResult = client.score(jsonData, depID)&#13;&#10;&#13;&#10;print(&apos;Start to result&apos;)&#13;&#10;#converting result json to dataframe&#13;&#10;result = json_normalize(scoreResult[&apos;data&apos;])&#13;&#10;&#13;&#10;print(&apos;initiating list&apos;)&#13;&#10;#List to add the result data&#13;&#10;prediction=[]&#13;&#10;&#13;&#10;#Number of records in input&#13;&#10;max_length = len(test.index)&#13;&#10;max_data_length = len(data.index)&#13;&#10;&#13;&#10;#Adding survived to a list&#13;&#10;for i in range(0,max_data_length):&#13;&#10;    prediction.append(data.iloc[i][&apos;Survived&apos;])&#13;&#10;&#13;&#10;#Adding confidence and predictions to a list&#13;&#10;for i in range(0,max_length):&#13;&#10;    prediction.append(result.iloc[i][PREDICTION])&#13;&#10;print(&apos;returning result&apos;)&#13;&#10;return prediction&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
       <column caption='TrainScoreDeploy' datatype='string' name='[Calculation_2846837937960083456]' role='measure' type='nominal'>
-        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;sys.path.insert(0, os.path.abspath(&apos;C:/Users/VenkateshkumarSivaku/pycharm/Task1&apos;))&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;# test = test.reset_index(drop=True)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonData = json.loads(jd)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;dataId = json.loads(responseJSON)&#13;&#10;&#13;&#10;&#13;&#10;returnResult1 = tabclient.query(&apos;RapidMinerTestAndTrain&apos;, &apos;vsivakumar@rapidminer.com&apos;, &apos;wXv2jBF&amp;v2Nm&apos;, dataId, jsonData, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(returnResult1[&apos;response&apos;])&#13;&#10; &#13;&#10;return returnResult1[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;AUTOMODEL_URL = &apos;https://go-develop.rapidminer.com&apos;&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;scoredataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;scoredataframe[&apos;Age&apos;] = scoredataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Siblings&apos;] = scoredataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Parents&apos;] = scoredataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Fair&apos;] = scoredataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe = scoredataframe[pd.isnull(scoredataframe[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;scoreJsonConversion = scoredataframe.to_json(orient=&apos;records&apos;)&#13;&#10;scoreJsonValue = json.loads(scoreJsonConversion)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainAndPredictionList = tabclient.query(&apos;RapidMinerTrainAndScore&apos;, AUTOMODEL_URL,&apos;vsivakumar@rapidminer.com&apos;, &apos;wXv2jBF&amp;v2Nm&apos;, trainJsonValue, scoreJsonValue, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(trainAndPredictionList[&apos;response&apos;])&#13;&#10; &#13;&#10;return trainAndPredictionList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
       <column caption='ScoreDeploy' datatype='string' name='[Calculation_2846837938047246338]' role='measure' type='nominal'>
-        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;sys.path.insert(0, os.path.abspath(&apos;C:/Users/VenkateshkumarSivaku/pycharm/Task1&apos;))&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;depID = &apos;7731960d-b270-4c26-bba5-edf38b0dc25b&apos;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;# test = test.reset_index(drop=True)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonData = json.loads(jd)&#13;&#10;&#13;&#10;&#13;&#10;returnResult1 = tabclient.query(&apos;RapidMinerTest&apos;, &apos;vsivakumar@rapidminer.com&apos;, &apos;wXv2jBF&amp;v2Nm&apos;, jsonData, &apos;Survived&apos;, depID)&#13;&#10;print(returnResult1[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult1[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;depID = &apos;7731960d-b270-4c26-bba5-edf38b0dc25b&apos;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonDataOfInputTest = json.loads(jd)&#13;&#10;&#13;&#10;&#13;&#10;predictedList = tabclient.query(&apos;RapidMinerTest&apos;, &apos;vsivakumar@rapidminer.com&apos;, &apos;wXv2jBF&amp;v2Nm&apos;, jsonDataOfInputTest, &apos;Survived&apos;, depID)&#13;&#10;print(predictedList[&apos;response&apos;])&#13;&#10;&#13;&#10;return predictedList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
       <column caption='TrainDeployed' datatype='string' name='[Calculation_2846837938310324228]' role='measure' type='nominal'>
-        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;sys.path.insert(0, os.path.abspath(&apos;C:/Users/VenkateshkumarSivaku/pycharm/Task1&apos;))&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;dataId = json.loads(responseJSON)&#13;&#10;print(data)&#13;&#10;&#13;&#10;returnResult = tabclient.query(&apos;RapidMinerTrain&apos;, &apos;vsivakumar@rapidminer.com&apos;,&apos;wXv2jBF&amp;v2Nm&apos;, dataId, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(returnResult[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;AUTOMODEL_URL = &apos;https://go-develop.rapidminer.com&apos;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMinerTrain&apos;, AUTOMODEL_URL, &apos;vsivakumar@rapidminer.com&apos;,&apos;wXv2jBF&amp;v2Nm&apos;, trainJsonValue, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
@@ -316,7 +306,7 @@
           </metadata-records>
         </connection>
       </extract>
-      <layout dim-ordering='alphabetic' dim-percentage='0.460277' measure-ordering='alphabetic' measure-percentage='0.539723' show-structure='true' />
+      <layout dim-ordering='alphabetic' dim-percentage='0.394207' measure-ordering='alphabetic' measure-percentage='0.605793' show-structure='true' />
       <semantic-values>
         <semantic-value key='[Country].[Name]' value='&quot;United States&quot;' />
       </semantic-values>
@@ -332,7 +322,7 @@
           <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
             <column datatype='real' name='[Age]' role='measure' type='quantitative' />
             <column caption='ScoreDeploy' datatype='string' name='[Calculation_2846837938047246338]' role='measure' type='nominal'>
-              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;sys.path.insert(0, os.path.abspath(&apos;C:/Users/VenkateshkumarSivaku/pycharm/Task1&apos;))&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;depID = &apos;7731960d-b270-4c26-bba5-edf38b0dc25b&apos;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;# test = test.reset_index(drop=True)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonData = json.loads(jd)&#13;&#10;&#13;&#10;&#13;&#10;returnResult1 = tabclient.query(&apos;RapidMinerTest&apos;, &apos;vsivakumar@rapidminer.com&apos;, &apos;wXv2jBF&amp;v2Nm&apos;, jsonData, &apos;Survived&apos;, depID)&#13;&#10;print(returnResult1[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult1[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;depID = &apos;7731960d-b270-4c26-bba5-edf38b0dc25b&apos;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonDataOfInputTest = json.loads(jd)&#13;&#10;&#13;&#10;&#13;&#10;predictedList = tabclient.query(&apos;RapidMinerTest&apos;, &apos;vsivakumar@rapidminer.com&apos;, &apos;wXv2jBF&amp;v2Nm&apos;, jsonDataOfInputTest, &apos;Survived&apos;, depID)&#13;&#10;print(predictedList[&apos;response&apos;])&#13;&#10;&#13;&#10;return predictedList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
                 <table-calc ordering-type='Rows' />
               </calculation>
             </column>
@@ -388,7 +378,7 @@
           <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
             <column datatype='real' name='[Age]' role='measure' type='quantitative' />
             <column caption='TrainDeployed' datatype='string' name='[Calculation_2846837938310324228]' role='measure' type='nominal'>
-              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;sys.path.insert(0, os.path.abspath(&apos;C:/Users/VenkateshkumarSivaku/pycharm/Task1&apos;))&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;dataId = json.loads(responseJSON)&#13;&#10;print(data)&#13;&#10;&#13;&#10;returnResult = tabclient.query(&apos;RapidMinerTrain&apos;, &apos;vsivakumar@rapidminer.com&apos;,&apos;wXv2jBF&amp;v2Nm&apos;, dataId, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(returnResult[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;AUTOMODEL_URL = &apos;https://go-develop.rapidminer.com&apos;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMinerTrain&apos;, AUTOMODEL_URL, &apos;vsivakumar@rapidminer.com&apos;,&apos;wXv2jBF&amp;v2Nm&apos;, trainJsonValue, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
                 <table-calc ordering-type='Rows' />
               </calculation>
             </column>
@@ -438,7 +428,7 @@
       </table>
       <simple-id uuid='{BB05925A-6F0E-4791-B5E6-CF43EDCF73BD}' />
     </worksheet>
-    <worksheet lock-updates='true' name='TrainAndScore'>
+    <worksheet name='TrainAndScore'>
       <table>
         <view>
           <datasources>
@@ -447,7 +437,7 @@
           <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
             <column datatype='real' name='[Age]' role='measure' type='quantitative' />
             <column caption='TrainScoreDeploy' datatype='string' name='[Calculation_2846837937960083456]' role='measure' type='nominal'>
-              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;sys.path.insert(0, os.path.abspath(&apos;C:/Users/VenkateshkumarSivaku/pycharm/Task1&apos;))&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;# test = test.reset_index(drop=True)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonData = json.loads(jd)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;dataId = json.loads(responseJSON)&#13;&#10;&#13;&#10;&#13;&#10;returnResult1 = tabclient.query(&apos;RapidMinerTestAndTrain&apos;, &apos;vsivakumar@rapidminer.com&apos;, &apos;wXv2jBF&amp;v2Nm&apos;, dataId, jsonData, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(returnResult1[&apos;response&apos;])&#13;&#10; &#13;&#10;return returnResult1[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;AUTOMODEL_URL = &apos;https://go-develop.rapidminer.com&apos;&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;scoredataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;scoredataframe[&apos;Age&apos;] = scoredataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Siblings&apos;] = scoredataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Parents&apos;] = scoredataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Fair&apos;] = scoredataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe = scoredataframe[pd.isnull(scoredataframe[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;scoreJsonConversion = scoredataframe.to_json(orient=&apos;records&apos;)&#13;&#10;scoreJsonValue = json.loads(scoreJsonConversion)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainAndPredictionList = tabclient.query(&apos;RapidMinerTrainAndScore&apos;, AUTOMODEL_URL,&apos;vsivakumar@rapidminer.com&apos;, &apos;wXv2jBF&amp;v2Nm&apos;, trainJsonValue, scoreJsonValue, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(trainAndPredictionList[&apos;response&apos;])&#13;&#10; &#13;&#10;return trainAndPredictionList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
                 <table-calc ordering-type='Rows' />
               </calculation>
             </column>
@@ -488,6 +478,60 @@
         <cols />
       </table>
       <simple-id uuid='{E21C8A9A-5FC8-4ABC-9CB7-EA3F5E1AD0CA}' />
+    </worksheet>
+    <worksheet name='quickTrain'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Titanic Training' name='federated.0jbz83q0w4bmof1e5znwe01jspvs' />
+          </datasources>
+          <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
+            <column datatype='real' name='[Age]' role='measure' type='quantitative' />
+            <column caption='QuickTrain' datatype='string' name='[Calculation_1924725917076062209]' role='measure' type='nominal'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;AUTOMODEL_URL = &apos;https://go-develop.rapidminer.com&apos;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;dataId = json.loads(responseJSON)&#13;&#10;print(data)&#13;&#10;&#13;&#10;returnResult = tabclient.query(&apos;Rapidminer_Quick_Automodel&apos;, AUTOMODEL_URL, &apos;vsivakumar@rapidminer.com&apos;,&apos;wXv2jBF&amp;v2Nm&apos;, dataId, &apos;Survived&apos;, &apos;tableauclient&apos;)&#13;&#10;print(returnResult[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+                <table-calc ordering-type='Rows' />
+              </calculation>
+            </column>
+            <column datatype='real' name='[Fair]' role='measure' type='quantitative' />
+            <column datatype='integer' name='[Parents]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Passenger]' role='dimension' type='nominal' />
+            <column datatype='integer' name='[Row No.]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Sex]' role='dimension' type='nominal' />
+            <column datatype='integer' name='[Siblings]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Survived]' role='dimension' type='nominal' />
+            <column-instance column='[Row No.]' derivation='None' name='[none:Row No.:ok]' pivot='key' type='ordinal' />
+            <column-instance column='[Survived]' derivation='None' name='[none:Survived:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Calculation_1924725917076062209]' derivation='User' name='[usr:Calculation_1924725917076062209:nk:1]' pivot='key' type='nominal'>
+              <table-calc ordering-type='Columns' />
+            </column-instance>
+          </datasource-dependencies>
+          <filter class='categorical' column='[federated.0jbz83q0w4bmof1e5znwe01jspvs].[none:Survived:nk]'>
+            <groupfilter function='union' user:ui-domain='relevant' user:ui-enumeration='inclusive' user:ui-marker='enumerate'>
+              <groupfilter function='member' level='[none:Survived:nk]' member='&quot;No&quot;' />
+              <groupfilter function='member' level='[none:Survived:nk]' member='&quot;Yes&quot;' />
+            </groupfilter>
+          </filter>
+          <slices>
+            <column>[federated.0jbz83q0w4bmof1e5znwe01jspvs].[none:Survived:nk]</column>
+          </slices>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.0jbz83q0w4bmof1e5znwe01jspvs].[usr:Calculation_1924725917076062209:nk:1]' />
+            </encodings>
+          </pane>
+        </panes>
+        <rows>[federated.0jbz83q0w4bmof1e5znwe01jspvs].[none:Row No.:ok]</rows>
+        <cols />
+      </table>
+      <simple-id uuid='{9B5569BD-A98A-4E2F-A831-E49C74CEBF0C}' />
     </worksheet>
   </worksheets>
   <windows source-height='30'>
@@ -610,427 +654,287 @@
       </viewpoint>
       <simple-id uuid='{63569389-F379-43DF-B82B-7EE6687467A5}' />
     </window>
+    <window class='worksheet' name='quickTrain'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.0jbz83q0w4bmof1e5znwe01jspvs].[usr:Calculation_1924725917076062209:nk:1]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.0jbz83q0w4bmof1e5znwe01jspvs].[none:Survived:nk]</field>
+            <field>[federated.0jbz83q0w4bmof1e5znwe01jspvs].[usr:Calculation_1924725917076062209:nk:1]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{2128BF8F-0331-4488-BD8B-69A88B890195}' />
+    </window>
   </windows>
   <thumbnails>
-    <thumbnail height='384' name='Score' width='288'>
-      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
+    <thumbnail height='192' name='Score' width='144'>
+      iVBORw0KGgoAAAANSUhEUgAAAJAAAADACAYAAADryOpPAAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAANdElEQVR4nO3de1SU953H8XcSwEuU06BRqSVY1iOxNmrKaIxXQryksgkKblllIzVSNUnN
+      xSZmo1VCPcbVJqg12UqqiaTikSoaTNBFhS2YWIxTA0QgUmtFIAIVQwa5ODP62z8oI5ekifOb
+      cRae7+uc+WOYeXh+c87nzPMMz4fv3KaUUgjhpNs9vQDRtUmAhBYJkNAiARJaJEBCiwRIaJEA
+      CS0SIKFFAiS0SICEFgmQ0CIBElokQEKLBEhokQAJLRIgoUUCJLRIgIQWCZDQIgESWiRAQosE
+      SGiRAAktEiChRQIktEiAhBYJkNDi9U1PMJvNt2Idoou6TYYrCB1yCBNaJEBCiwRIaJEAdSOH
+      TpylsdkGQGOzjUMnzrp9n9/4Kexr5cZjWpbR6cfBS9NIie1Pcdp6Xkv6XwovN0EvP0ZGvsJr
+      S8fj5wU1uRt55TcH+OR8PTbvvgyZsIRXX41mmI/OSzG2dzMLSMspIfvU30hYEEr8O3+ktLyW
+      v9c1MH/GKLft13WfwqpTiQs/wKS0FGIDKzmacopBYQ9zr39vrtccYe3jq7n81AdsiehHQXoS
+      lhFzeWCoL7c3lvDuk0+QOnormc+774V2Z4dOnGVr+o0/twwL6Edpea3j/pIIEz9+YKhb9u2i
+      Q5id4r2pFIXNZ04gwGCmxjzKD/174wX4DHiIKSYbl+uuADAqYjGThvriA3j1Hk7olHuorfvS
+      NUsxoCmjAhkW0M9xv214hgX0Y8qoQLft2zUBashix846IuY8zJ0dHrI3XsSc/DzrzeEsnt3h
+      hVgtnD2yhpfe6cnS2PEuWYoR9e7pTcKC0HYhgpbwJCwIpXdPb7ft2/lzoDaqP9hDtn80u8a2
+      /XW5xJuWkQH0+f4slm9fzmTf1sfKSI6JYssZYOAYntm0hXlBLlmKuMVccA5USlJkLKVxmbw+
+      07fzw1YLFYX7Wb9yF34r95Awuc1z7I18cf4j3nj5V5z912S2xwa5JtEG09hsc5w0d+TudyHt
+      Q1hD5jZ21EUQPf0rwgPg48v3TLG8MK8/GVn57R/z6s1dQ6examkYRYePUam7GIPKKSjrdN7T
+      qrS8lpyCMrftWzNA1XywJxv/6EjaHb0qj5Ly/mkqLFYA7I0lZGWf457vDgIKSE86xtkvGrED
+      WGs4kpWH9+BB9NdbjGH9+IGhRE0ZDtx4x2kNUdSU4W77BAaa50D24r2k5o8meu2w9g9857v0
+      PPkaixNLqK63tfwdaOZa3lw4DKjhrsYkfhm9grOXm8C7L0Mm/JSk1TM6nYCLb2/+jFHc/Z07
+      mTIq0HFSnVNQ5tbwgFyNF5rkUobQIgESWiRAQosESGiRAAktEiChRQIktEiAhBYJkNAiAepG
+      DNOJdihLJiZqC2cIJ9GcwGSnFyMM1Ylu0UDm8kfI+pd/p/J3NSyWADnNcJ1oAHvxDpIq43j6
+      kT6uWYKBGbATXU36lgOMfTYG97004zBcJ7oh9795i0W8O9YL3FeWE7eAC96BSnkvtYgpcXNp
+      XyubTILZjPl4NjtfCuDQwkeJz7WAvZgdm/KYGhfBQP2dC76+E11aXkv8O390fDJzB+2T6IbM
+      5Uxd78fmw//ZvtbaQVlyDFHnFmOekcODz6TT+SUFszQthVg5pt20LnwS7UQnevwq/mQ2Y269
+      pS0lmHASzRIeZxmsEy3cQTrRokuSSxlCiwRIaJEACS0SIKFFAiS0SICEFgmQ0CIBElokQEKL
+      BKgbMU4n2tGFbiM8EXOClFqdZaxOdG48pqQg0lJipZHoAl24ztHq5jrRleXnwbcP0oZ2DcN1
+      or+suwwD7qZf598knGC4TnTd5UuQsQxTBtDLj6EPxLBidSwjv2bQq/j/y7NzogGr5TQ7l/6M
+      3w18haMbZNCmM4w7Jxrw8f0hTyycjq2yiku6izEow82J3r3xfU5fbJkTbW8s4e3th/Ed+n2Z
+      E+0kg3WiLYQMPci6uERKqlu+L2z4tJfZunKyHL40SCdadElyKUNokQAJLRIgoUUCJLRIgIQW
+      CZDQIgESWiRAQosESGiRAHUjxulEY+fy8W38ckMKH1c00ctvJI/G/5rlE6Ri5ixDdaLtxW/y
+      k/kHuG/d71k5bQBYzlJUcRf3/0AC5AyDdaLtHE/dSd2cNayaNgAfwMd3qIRHg8E60aV8esrG
+      g2N/5Jo+rTBaJ/oSNRfvpvrQM8xZ8wnn66HvkAn8fMN/ERUkkepqbv2caO6kjy8EzFjB25l/
+      wpyXQeKki6x7YTul+osxJE/OifZAJ3oIQcF/x2K9C18fwMuP+2dNJ/jC51TpLsagDNaJ7scj
+      j0dwevMGjtRYwd5ISeZhzo0ZSbDeYgzLk51olAZb0RtqdshCtbuqwwNXitTeVQvUzNBxKiQk
+      RIVMnKYWvJqlPrc5tlR/3fsLFRU6ToWETFTTFiSqE1/qrEQopdTBvL+ohiarUkqphiarOpj3
+      F7fvUzrRQotcyhBaJEBCiwRIaJEACS0SIKFFAiS0SICEFgmQ0CIBElokQN2IrSAVdbVlkKm6
+      egVbQarb9+mBTvSNnlCHDWXsr4arH27CenIbdxSn0yvyLZr2LeJaVSHX6y/SY+JzbtuvZ+ZE
+      t9+Q1LhwDkxKI0W+ttkptoJUmrPXOO7fMWgk16oKHfd7hq3Ce1S0W/btkTnR7bYs3ktqURjz
+      50h4nOV1bzh3DBrpuN82PHcMGonXveFu27dH5kS32ZCsHTupi5jDwzLfzmm39ehDr8i32oUI
+      WsLTK/ItbuvhvpHuHpkT3WZD9mT7E71rrBTsuygPdKLbbPleKkVT4pjbYUanuDnq6hXHSXNb
+      16oKadq3yPHJzB08Nye6IZNtO+qIiJ6ODKjXY/8so9N5T6trVYXYP+v8adlVPNCJ/seW/zjs
+      RY6Vg5cu71HR+IyJA26c97SGyGdMnNs+gYFH5kQD9mL2puYzOnotcvRyjR4Tn+P2vv543Rvu
+      OKm2f5bh1vCAzIkWmuRShtAiARJaJEBCiwRIaJEACS0SIKFFAiS0SICEFgmQ0CIB6kYM0okG
+      rKWkrljB1o/OU09fhj+2ig0vhuEv11Wd5qlOtNaAqXaqdquFIfPUjvNKKVWhjuw8oD79vEHZ
+      lFJXqw+r1dPHqZ+/d0kpZVMn1j2kHlq2T124qpStoVhtnz9OTU/Md9lSjMaav1tZEkc4bg27
+      5ra7b83f7bZ9e6ATXUnJpxYmRcwmwAe8eg/n4bAgavNPU+maxRiOwTrRgYTOHEFe+n7Kra1d
+      oQuMeWwqg12yGOMxXCc6MGYL8efmMnv8WgAGRr3JnqiBrliKuMU80Im2kBv/b7zpm8DB42bM
+      x/ez5Is1/GTjn7HrL8aQDNaJzicroz/TZ5kY4AP4BPBo3GP0+MNBPtZdjEEZrBMdSFDwGQ6/
+      9wmX7YC1hiMpaXxukjnRzvJkJ9ojc6JttR+p3z4ZoSaGhKiQcaEq6hc7VIHMidZmzd+trjfX
+      K6WUut5c79aP762kEy20yKUMoUUCJLRIgIQWCZDQIgESWiRAQosESGiRAAktEiChRQLUjRim
+      E22/mM2vl6/hQEk99B3OY6s28GKYv8xJ1GCgOdEVbJzxPBVLklk3OwDK9/Ny7O8JeuMPPP0D
+      iZAzjDUnuiwfc+0kImYH0FIHms3CKBtpGQWuWYoBGasTPXg49/keI31/OVYAqwXfAUFYTn8m
+      pXonGawTPZanNsXyq9XzGL+2Ce++Q7g/6BrYfySV1i7IBedApSRFxlIal8nrM7+i1mq1UFG4
+      n/Urd+G3cg8JnaaNQ1lyDFF5kWT+NoqO36QhvtnXdaLB/e9CnpsT7VBN3rEz3DP6PgmPkwzW
+      iYayQjMXG+2AlfL9G0gqGkPMLBn46yzDzYluLn6bZ5/+mIomb/oOmcBPk9Yj/xamR+ZEiy5J
+      LmUILRIgoUUCJLRIgIQWCZDQIgESWiRAQosESGiRAAktEqBuxBOdaOcDlBuPyWTqdItJLmv3
+      tIbceMJMJkwxydx4xMLHGx/noQdNmCbN4oXkQiwdf7+4KVc/3ERz9hrHSLumfYtozl7D1Q83
+      uXW/zgdocgJms/nGLeNFRhPM9NDANk8qZeemT4n+WftKZXXaSzxrNpGYkUde+jPcues5Xs9t
+      cHopRmcrSMV6chtwYy5ia73DenKbW9+J3NSJbmE5mMS++57jP4a3fW4lRw+cZHxMHPf7eeHl
+      F8ZTTwSRkZ6DRMg53bMTbf8zSZu/5ImnJnfoSf+V0qJgRo648dOBAYF4l/6N9gc/8W15shPt
+      kgC1dqIj27TKylISOTr1yW/X8xl8D0EXa7jkisWIW8o9c6ItB/nNNl8WzQ/5do21yguc8x9A
+      f/3FGJIn50Rr/1dGayd6c5tOdOX7qeQ0FZETbmJdm+dGmc6RaF7EsBFnOFXUAIEth7Hq8jJs
+      w0IIRDjjqzrRrfdbO9FuaybqDXmtUrsXhqjZW8/886flrFYh83ao861b7V2ixs3bpE7V2pSt
+      Nkutnj5Ovfg/V/SWYnDNxzY6vqnnenO94xt7mo9tdOt+3dOJ/gYDo9az+cLTLAsfR73X9wiN
+      S2L1jI7/kihuhnSiRZcklzKEFgmQ0CIBElokQEKLBEhokQAJLRIgoUUCJLT8HxNabTWQWVxb
+      AAAAAElFTkSuQmCC
     </thumbnail>
-    <thumbnail height='384' name='Train' width='288'>
-      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
+    <thumbnail height='192' name='Train' width='144'>
+      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
+      TkSuQmCC
     </thumbnail>
-    <thumbnail height='384' name='TrainAndScore' width='288'>
-      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
+    <thumbnail height='192' name='TrainAndScore' width='144'>
+      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
+      TkSuQmCC
+    </thumbnail>
+    <thumbnail height='192' name='quickTrain' width='144'>
+      iVBORw0KGgoAAAANSUhEUgAAAJAAAADACAYAAADryOpPAAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAAIF0lEQVR4nO3dfWxV9R3H8Y8LMMNDEwbCCGFFQtaxoZtyYBRXoCjFSGYr7VawcaBWQZbi
+      aJploMgaAzhCeLCD0U0c18HGFRspWhZgJaFktSHX8WALa9N1Fq2lCAUvoSzlJt0fZoNlfzQ5
+      3x96T8/79V9vbs79Jn3nnN/t+eX0jp6enh4BPn3lyx4AwUZAMCEgmBAQTAgIJgQEEwKCCQHB
+      hIBgQkAwISCYEBBMCAgmBAQTAoIJAcGEgGBCQDAhIJgQEEwICCYEBBMCggkBwYSAYEJAMCEg
+      mPTr7Q2xWOyLmAMBdQcPV4AFlzCYEBBMCAgmvS6ikfyubprY63uGLK+/LZ9tOgMluv6pY5G1
+      WpqToYJIq6uZECCGgFoVLX5Jh5Wh9G9ddzcRAsVwCUtVwfY/SJJqVjuaBoHDIhomBAQTAoIJ
+      AcGEgGDi/1tYa0QFuWVq/O8LufLKJM3dqFjpdAejIQi4Gw8TLmEwISCYEBBMCAgmBAQTAoIJ
+      AcGEgGBCQDBhT3QfkL1yT6/vqVw7/7Z8tuEMlFDniYhK8jKV7nnyMnJUEjmtuLvZEACGgGq1
+      ddUJ3fOLqI7GYqr940L1RH6m8vfdDYfk5/8S9q9JKt43XYP+c4Qx9+veUXHVfXhJmjTMzXRI
+      ev7PQHcOuhmPpPjpfTrUmKapHvGEiYNFdLeaoj9X8a+b9f31b6gg1X5EBIctoESLKpY/pw3n
+      f6A1b27QrFF8qQsbw288rpqXn9OG+OPa/aeFGkc7oeT/1972jnZUDdeSCuIJM/+/+n80qUGN
+      asj1VHbLy2lFFdq9kIVQWLAnGibcC4MJAcGEgGBCQDAhIJgQEEwICCYEBBMCggl3sfqAgO6J
+      vqCaTUuVl5kuz/OUnpmnkmiTut3NhgAwBNSuywMX6JXKo4rF6lS97RF9urlIW0+5Gw7Jz3AJ
+      +66yF9/8aeCEmZrxjW1q/cw+FILDyRqoO96so1tW6Pd3FikyzcURERS2gG55TuLIycu0uexx
+      NpeFjO1rfOpC7Y7FVFdzWFvmteqVuU8r0pJwNBqCwMnfgfoNHKrxs1epaFaDDh1rc3FIBIT/
+      gE5VqvxYsy53fX7G6b5wWNV1/TX668NdzYYA8L9iGTVUXeUvKn9lszqvS/2HjNUDi8r10pxB
+      DsdDsmNPNEy4FwYTAoIJAcGEgGBCQDAhIJgQEEwICCYEBBM2X/QBAd0TfVNrpECe58lbXePi
+      cAgQe0DXDmrra6P1zJNpDsZB0BgDSujMznK1Ff5UDw92MxCCxRZQR6XK9k/R8zzbN7QMAV1T
+      zbbfSs8+qSksxUPLd0CJMzu1ue4hFWaPdDkPAsb3ueN4xS6du3RDi6dGb3m1WF5zkSp2LxQX
+      tXDwHdC0Ve8pturmz62RAuW2LFasdLqLuRAQ/CUaJuyJhglnIJgQEEwICCYEBBMCggkBwYSA
+      YEJAMCEgmLARow+4umlir+8Zsrz+tny2KaDWSIFyyxr/57W5G2Pifmp42AJqaeSf7IacYQ3U
+      po8+lFIGsxk6zAwBfaYrndKIu4a5mwaBYwjoijovSlXFnjzPU0bWfJVETivubjYEgKP9QN2K
+      1+9S0TO/08hf/kXredDmF+rL/Bbm6O9AA5Qy8Sk9nXVDbecvujkkAsHwnOg92vROvdq7EpIS
+      6jr7unYcStH4u3lOdJj4/xp/9ySNP7BOhRvPquPqDfUfMkGzV2zXC9O5fIUJe6Jhwr0wmBAQ
+      TAgIJgQEEwKCCQHBhIBgQkAwISCYsCe6Dwju3fhEp2q3L1VOhifPy1DWU+v110uOJkMgGM5A
+      CZ0pL9Sy/fdoXUWtZo+Q4s0N+tjdbAgA/wElahXddUV5W1Zp9ojPD5My/j5929VkCAT/l7Cm
+      D/S3G+macj/LqDDzH9DFC2q/q0N/XpanzHRPXnqm8koq1JJwOB2Snv+ABg1WisZozsrXdfC9
+      mOqqNiqjfZ1KdjQ5HA/Jzn9AY8cp7dO4uoemaICkfl+7TzlZaTr3yXl30yHp+Q9o2MN6Irte
+      W9Yf1oVuKdF1VgcPtWjyvfzXnjAx/B1okKat+I2evVau/Bmeps55XnXeFv0ql399ECbsiYYJ
+      98JgQkAwISCYEBBMCAgmBAQTAoIJAcGEgGDCZp4+IHvlnl7fU7l2/m35bP8B1ayWV1z1fy/z
+      2N9w8R/Q9FLFYqU3f+6IqnDufmXMJJ4wcbQGSujMW1E1zPqJ8ugnVNwEdK1aO3ddUXbeg+IB
+      d+HiJKCOd/fqyKh8zZvCmjxsHATUpH3RBs0oXKBv2g+GgDEHdO3ga9p5JVv5WSku5kHAGAPq
+      0Lt7j2hU/jxx9QonU0CJM28pevJ7ys/h4hVW7ImGCffCYEJAMCEgmBAQTAgIJgQEEwKCCQHB
+      hIBgwh2sPiCwz4nuboqqJC9T6Z6n9MwntO5Iu3hEYrj4DyhxXBuXlKun4A0djdWpelum/v7C
+      IpWdcjgdkp7/gNrO6oN4hrIfG6MB6qeBEx7UrHGXdLK+zeF4SHb+A0qdqUe+U6fKtz9StxLq
+      OlutI+cm69GHRjscD8nOsIhOVUHZarUseEzT1kjSSOVu3SsekRgu/s9A8Rqt/tFWpZQeUG0s
+      ptq3l+jyyz/WpvdZRoeJ/4BOVqtqeJZyvBEaIGnAmB+q8NGv6s0Dx91Nh6RnWAONU1rjIe07
+      0amEpO4Lh7W74hN5PCc6VPyvgVILVPbqdb1Ymq2pH19X/yFj9cCicq3JHuZwPCQ79kTDhHth
+      MCEgmBAQTAgIJgQEEwKCCQHBhIBg8m81hBZQxcIuYAAAAABJRU5ErkJggg==
     </thumbnail>
   </thumbnails>
 </workbook>
