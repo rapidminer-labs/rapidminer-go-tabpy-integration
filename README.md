@@ -1,5 +1,5 @@
 ## Using RapidMiner GO with Tableau Products
-This projects walk thru examples of leveraging RapidMiner's Go Engine for AutoModel and Tableau Prep and Tableau Studio and Server
+This projects walk thru examples of leveraging RapidMiner's Go Engine for AutoModel and Tableau Prep and Tableau Studio and Server. 
 The common steps for using the solution are as below, followed by examples of integration with Tableau Desktop, Tableau Prep   
 
 1) Install rapidminer-go-python package by running the following command in conda our your preferred python environment
