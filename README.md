@@ -3,6 +3,7 @@ This projects walk thru examples of leveraging RapidMiner's Go Engine for AutoMo
 The common steps for using the solution are as below, followed by examples of integration with Tableau Desktop, Tableau Prep   
 
 1) Install rapidminer-go-python package by running the following command in conda our your preferred python environment
+
 pip install rapidminer-go-python
 
 2) Install tabpy by following instructions here https://github.com/tableau/tabpy
