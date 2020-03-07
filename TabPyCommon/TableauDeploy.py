@@ -13,7 +13,7 @@ DEPLOYMENT_ID = 'DeploymentID'
 STATUS = 'Deployment_Status'
 MODEL = 'Deployed_Model'
 depID = ''
-AUTODEPLOY = False
+AUTODEPLOY = True
 client = ''
 
 tabclient = Client('http://localhost:9004/')

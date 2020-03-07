@@ -21,16 +21,16 @@ MODEL = 'Deployed_Model'
 DEPLOYMENT_ID = 'DeploymentID'
 
 
-def quick_training(data):
+def quick_training(training_data):
 
     # removing rows with label values
-    data = data.dropna(subset=[label])
+    training_data = training_data.dropna(subset=[label])
     tabclient = Client(tabpy_serverurl)
 
     # dataframe to json+
-    responseJSON = data.to_json(orient='records')
+    responseJSON = training_data.to_json(orient='records')
     input_data = json.loads(responseJSON)
-    returnResult = tabclient.query('rapidminer_quick_autommodel', go_url, go_username, go_password, input_data, label)
+    returnResult = tabclient.query('Rapidminer_Quick_Automodel', go_url, go_username, go_password, input_data, label,'tabprep')
     final_out = json_normalize(returnResult['response'])
     return final_out
 
