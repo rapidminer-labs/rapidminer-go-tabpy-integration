@@ -1,30 +1,13 @@
+[![N|Solid](https://cdnl.tblsft.com/sites/default/files/pages/tableau_cmyk_2015.png)](https://tableau.com)
+[![N|Solid](https://1xltkxylmzx3z8gd647akcdvov-wpengine.netdna-ssl.com/wp-content/uploads/2016/06/rapidminer-logo-retina.png)](https://go.rapidminer.com)
 ## Using RapidMiner GO with Tableau Products
-This projects walk thru examples of leveraging RapidMiner's Go Engine for AutoModel and Tableau Prep and Tableau Studio and Server. 
-The common steps for using the solution are as below, followed by examples of integration with Tableau Desktop, Tableau Prep   
 
-1) Install rapidminer-go-python package by running the following command in conda our your preferred python environment
+This project aim to allow use of RapidMiner GO with Tableau products.
 
-pip install rapidminer-go-python
+RapidMiner Go is a rapid visual prototyping and deployment tool for data scientists.You can build predictive models and use them to make predictions in the cloud.
 
-2) Install tabpy by following instructions here https://github.com/tableau/tabpy
+Tableau can help anyone see and understand their data. Connect to almost any database, drag and drop to create visualizations, and share with a click.
 
-3) Download the following controller files from this project. Depending on what you are trying to do, you may not need all of the following methods
+With this integration we want to support use cases where a Tableau prep or Tableau dashboard user can easily upload data to RapidMiner Go to build predictive models and even deploy them automatically.
 
-
-
-      a. QuickModelTrainingController.py
-  
-        Used when building predictive models from TableauPrep and Tableau desktop, with minimal settings
-  
-      b. ScoreController.py
-      
-        Used when getting predictions from a model that is deployed on RapidMiner GO.
-        These predictions are then consumed in Tableau Prep, Tableau Desktop and  Server
-  
-      c. TrainController.py
-      
-        Used when building predictive models from TableauPrep and Tableau desktop, with minimal settings
-  
-  
-
-    
+Such deployed models can then be used to score(predict) where the predictions are fed directly into the Tableau prep flows and into the dashboards.
