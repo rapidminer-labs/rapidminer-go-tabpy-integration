@@ -11,3 +11,6 @@ Tableau can help anyone see and understand their data. Connect to almost any dat
 With this integration we want to support use cases where a Tableau prep or Tableau dashboard user can easily upload data to RapidMiner Go to build predictive models and even deploy them automatically.
 
 Such deployed models can then be used to score(predict) where the predictions are fed directly into the Tableau prep flows and into the dashboards.
+
+Please refer to the wiki [https://github.com/rapidminer-labs/rapidminer-go-tabpy-integration/wiki] for setup steps, examples and other material.
+
