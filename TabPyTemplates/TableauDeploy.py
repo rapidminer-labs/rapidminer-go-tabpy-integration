@@ -19,7 +19,7 @@ client = ''
 tabclient = Client('http://localhost:9004/')
 #new update
 
-def rapidminer_quick_autommodel(go_url, gouser, gopassword, input_data, label, platform):
+def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label, platform):
     from rapidminer_go_python import rapidminergoclient as amw
     LABEL_ATTRIBUTE = label
 
@@ -44,7 +44,7 @@ def rapidminer_quick_autommodel(go_url, gouser, gopassword, input_data, label, p
     print('returning result')
     return prediction
 
-def rapidminerTrain(go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_depoly, platform):
+def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_depoly, platform):
 
     from rapidminer_go_python import rapidminergoclient as amw
     LABEL_ATTRIBUTE = label
@@ -96,7 +96,7 @@ def rapidminerTrain(go_url, gouser, gopassword, input_data, label,cost_matrix,hi
     print('returning result')
     return prediction
 
-def rapidminerScore(go_url, gouser, gopassword, inputScoreData, label, depID):
+def rapidminer_score(go_url, gouser, gopassword, inputScoreData, label, depID):
     from rapidminer_go_python import rapidminergoclient as amw
     global client
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
@@ -127,7 +127,7 @@ def rapidminerScore(go_url, gouser, gopassword, inputScoreData, label, depID):
 
 
 
-def rapidminerTrainAndScore(go_url, gouser, gopassword, input_train_data, input_score_data, label, platform):
+def rapidminer_train_and_score(go_url, gouser, gopassword, input_train_data, input_score_data, label, platform):
     # List to add the result data
     prediction = []
 
@@ -140,24 +140,24 @@ def rapidminerTrainAndScore(go_url, gouser, gopassword, input_train_data, input_
 
 
 print('Deploying Quick Model')
-tabclient.deploy('Rapidminer_Quick_Automodel',
-              rapidminer_quick_autommodel,
+tabclient.deploy('Rapidminer_Quick_Training',
+              rapidminer_quick_training,
               'Quickly Trains a model for predictions', override=True)
 
 print('Deploying Training and Score')
 tabclient.deploy('RapidMinerTrainAndScore',
-              rapidminerTrainAndScore,
+              rapidminer_train_and_score,
               'Trains and Returns a dataset with predictions', override=True)
 
 
 print('Deploying Score')
 tabclient.deploy('RapidMinerScore',
-              rapidminerScore,
+              rapidminer_score,
               'Returns a dataset with predictions', override=True)
 
 
 
 print('Deploying Training Function ')
 tabclient.deploy('RapidMinerTrain',
-              rapidminerTrain,
+              rapidminer_train,
               'Trains a model for predictions', override=True)

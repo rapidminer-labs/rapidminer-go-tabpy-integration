@@ -6,15 +6,15 @@ import pandas as pd
 
 # Change the following values
 tabpy_serverurl = 'http://localhost:9004/'
-go_url = 'https://go.rapidminer.com'
-go_username = 'username here'
-go_password =  'password here'
+go_url = 'https://go-develop.rapidminer.com'
+go_username = 'bpatil@rapidminer.com'
+go_password =  'applesoranges'
 
 #values to be changed based on data
-label = 'your label column name here'
-cost_matrix =[[],[]]
-high_value = ''
-low_value = ''
+label = 'Survived'
+cost_matrix =[[1,1],[1,1]]
+high_value = 'Yes'
+low_value = 'No'
 selection_criteria = ''
 should_deploy = true
 
