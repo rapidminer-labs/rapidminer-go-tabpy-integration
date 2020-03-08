@@ -4,7 +4,7 @@ from tabpy_client import Client
 import pandas as pd
 
 tabclient = Client('http://localhost:9004/')
-go_url = ''
+go_url = 'https://go.rapidminer.com'
 go_username = ''
 go_password =  ''
 
@@ -21,7 +21,7 @@ def score(test):
     # dataframe to json
     jd = test.to_json(orient='records')
     jsonData = json.loads(jd)
-    returnResult = tabclient.query('RapidMinerScore',go_url, go_username , go_password, jsonData, label, deployment_ID)
+    returnResult = tabclient.query('RapidMiner_Score',go_url, go_username , go_password, jsonData, label, deployment_ID)
     test[PREDICTION] = returnResult['response']
     return test
 
@@ -29,8 +29,8 @@ def score(test):
 #***Change the schema according to your result***
 def get_output_schema():
   return pd.DataFrame({
-    'col1' : prep_decimal(),
+    'col1.' : prep_decimal(),
     'col2': prep_decimal(),
     'col3': prep_string(),
-     PREDICTION: prep_string()
+    PREDICTION: prep_string()
   })

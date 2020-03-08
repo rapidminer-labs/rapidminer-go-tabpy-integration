@@ -145,19 +145,19 @@ tabclient.deploy('Rapidminer_Quick_Training',
               'Quickly Trains a model for predictions', override=True)
 
 print('Deploying Training and Score')
-tabclient.deploy('RapidMinerTrainAndScore',
+tabclient.deploy('RapidMiner_Train_And_Score',
               rapidminer_train_and_score,
               'Trains and Returns a dataset with predictions', override=True)
 
 
 print('Deploying Score')
-tabclient.deploy('RapidMinerScore',
+tabclient.deploy('RapidMiner_Score',
               rapidminer_score,
               'Returns a dataset with predictions', override=True)
 
 
 
 print('Deploying Training Function ')
-tabclient.deploy('RapidMinerTrain',
+tabclient.deploy('RapidMiner_Train',
               rapidminer_train,
               'Trains a model for predictions', override=True)
