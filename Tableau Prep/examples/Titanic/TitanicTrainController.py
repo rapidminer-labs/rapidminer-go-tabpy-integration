@@ -7,12 +7,12 @@ import pandas as pd
 # Change the following values
 tabpy_serverurl = 'http://localhost:9004/'
 
-go_url = 'https://go-develop.rapidminer.com'
-go_username = 'vsivakumar@rapidminer.com'
-go_password =  'wXv2jBF&v2Nm'
+go_url = 'https://go.rapidminer.com'
+go_username = 'username here'
+go_password =  'password here'
 
 #values to be changed based on data
-label = 'Survived'
+label = '<your label column name here'
 tabclient = Client(tabpy_serverurl)
 
 

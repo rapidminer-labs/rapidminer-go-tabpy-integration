@@ -5,8 +5,8 @@ import pandas as pd
 
 tabclient = Client('http://localhost:9004/')
 go_url = 'https://go-develop.rapidminer.com'
-go_username = 'vsivakumar@rapidminer.com'
-go_password =  'wXv2jBF&v2Nm'
+go_username = 'bpatil@rapidminer.com'
+go_password =  ''
 
 
 #values to be changed based on data

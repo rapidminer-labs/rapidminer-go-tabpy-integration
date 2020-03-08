@@ -20,7 +20,6 @@ tabclient = Client('http://localhost:9004/')
 #new update
 
 def rapidminer_quick_autommodel(go_url, gouser, gopassword, input_data, label, platform):
-    print('URL:'+go_url)
     from rapidminer_go_python import rapidminergoclient as amw
     LABEL_ATTRIBUTE = label
     # To refresh the changes made in AutoModelWeb
@@ -52,41 +51,23 @@ def rapidminer_quick_autommodel(go_url, gouser, gopassword, input_data, label, p
     print('returning result')
     return prediction
 
-def rapidminerTrain(go_url, gouser, gopassword, input_data, label, platform):
+def rapidminerTrain(go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_depoly, platform):
 
     from rapidminer_go_python import rapidminergoclient as amw
     LABEL_ATTRIBUTE = label
-
-   # To refresh the changes made in AutoModelWeb
-    #sys.path.append(os.path.dirname('C:/CodeBase/rapidminer-go-python/mar06/rapidminer_go_python'))
-    #import rapidminergoclient as amw
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
-    # To get the AMW instance
-    #connection(go_url, gouser, gopassword)
-
     data = client.convert_json_to_dataframe(input_data)
-
-    # dataframe to json
     dataId = client.add_dataFrame(data)[DATA_ID]
-
-
     modelingTaskID = client.create_modeling_task(dataId)[DATA_ID]
-
-
     # setting label
     client.set_label(modelingTaskID, LABEL_ATTRIBUTE)
-    client.set_class_interest(modelingTaskID, 'Yes', 'No')
-    jsonVal = client.set_cost_matrix(modelingTaskID, [[1, -1], [-1, 1]])
+    client.set_class_interest(modelingTaskID, high_value, low_value)
+    jsonVal = client.set_cost_matrix(modelingTaskID, cost_matrix)
     print('TaskID:' + modelingTaskID)
 
     # Initiating model training
     client.start_execution(modelingTaskID)
     print('ExecutingModel...')
-    # Loops till all the task are completed
-    #client.wait_till_execution_completion(modelingTaskID)
-
-    #print('Model Execution Completed')
-
     # Obtaining the trained model results
     client.get_execution_result(modelingTaskID)
 
