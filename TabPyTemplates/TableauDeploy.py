@@ -22,13 +22,6 @@ tabclient = Client('http://localhost:9004/')
 def rapidminer_quick_autommodel(go_url, gouser, gopassword, input_data, label, platform):
     from rapidminer_go_python import rapidminergoclient as amw
     LABEL_ATTRIBUTE = label
-    # To refresh the changes made in AutoModelWeb
-    #sys.path.append(os.path.dirname('C:/CodeBase/rapidminer-go-python/mar06/rapidminer_go_python'))
-    #import rapidminergoclient as amw
-
-
-    # To refresh the changes made in AutoModelWeb
-    importlib.reload(amw)
 
     # To get the AMW instance
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
@@ -105,13 +98,10 @@ def rapidminerTrain(go_url, gouser, gopassword, input_data, label,cost_matrix,hi
 
 def rapidminerScore(go_url, gouser, gopassword, inputScoreData, label, depID):
     from rapidminer_go_python import rapidminergoclient as amw
-    print("URL is " + go_url)
     global client
-    #sys.path.append(os.path.dirname('C:/CodeBase/rapidminer-go-python/mar06/rapidminer_go_python'))
-    #import rapidminergoclient as amw
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
 
-    print('Inside Score Method, DeploymentID'+str(depID))
+    print('Inside Score Method, DeploymentID '+str(depID))
     PREDICTION = 'prediction(' + label + ')'
 
 
@@ -121,7 +111,6 @@ def rapidminerScore(go_url, gouser, gopassword, inputScoreData, label, depID):
     # converting result json to dataframe
     result = client.convert_json_to_dataframe(scoreResult['data'])
     req = client.convert_json_to_dataframe(inputScoreData)
-    # req.is_copy = True
 
     # List to add the result data
     prediction = []
@@ -133,7 +122,7 @@ def rapidminerScore(go_url, gouser, gopassword, inputScoreData, label, depID):
     for i in range(0, max_length):
         prediction.append(result.iloc[i][PREDICTION])
 
-    print('Completed Successfully')
+    print('Scoring Completed Successfully')
     return prediction
 
 
