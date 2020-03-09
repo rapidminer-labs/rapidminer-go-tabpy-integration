@@ -15,7 +15,8 @@ label = 'Survived'
 cost_matrix =[[1,1],[1,1]]
 high_value = 'Yes'
 low_value = 'No'
-selection_criteria = ''
+#### possible values, 
+selection_criteria = 'gain'
 should_deploy = true
 
 tabclient = Client(tabpy_serverurl)
@@ -33,7 +34,7 @@ def training(data):
     # dataframe to json+
     responseJSON = data.to_json(orient='records')
     dataId = json.loads(responseJSON)
-    returnResult = tabclient.query('RapidMinerTrain', go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_depoly, platform):
+    returnResult = tabclient.query('RapidMinerTrain', go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_deply platform):
     final_out = json_normalize(returnResult['response'])
     return final_out
 

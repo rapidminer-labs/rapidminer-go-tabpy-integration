@@ -44,7 +44,7 @@ def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label, pla
     print('returning result')
     return prediction
 
-def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_depoly, platform):
+def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_deploy, platform):
 
     from rapidminer_go_python import rapidminergoclient as amw
     LABEL_ATTRIBUTE = label
@@ -56,7 +56,7 @@ def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,h
     client.set_label(modelingTaskID, LABEL_ATTRIBUTE)
     client.set_class_interest(modelingTaskID, high_value, low_value)
     jsonVal = client.set_cost_matrix(modelingTaskID, cost_matrix)
-    print('TaskID:' + modelingTaskID)
+    print('TModeling askID:' + modelingTaskID)
 
     # Initiating model training
     client.start_execution(modelingTaskID)
