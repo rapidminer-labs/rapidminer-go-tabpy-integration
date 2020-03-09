@@ -9,12 +9,14 @@ tabpy_serverurl = 'http://localhost:9004/'
 
 go_url = 'https://go.rapidminer.com'
 go_username = ''
-go_password =  ''
+go_password = ''
 
 #values to be changed based on data
-label = ''
+label = 'Survived'
 tabclient = Client(tabpy_serverurl)
 
+selection_criteria = 'classification_error'
+max_min_crietria_selector = 'max' #or 'min'
 
 STATUS = 'Deployment_Status'
 MODEL = 'Deployed_Model'
@@ -30,7 +32,8 @@ def quick_training(training_data):
     # dataframe to json+
     responseJSON = training_data.to_json(orient='records')
     input_data = json.loads(responseJSON)
-    returnResult = tabclient.query('Rapidminer_Quick_Training', go_url, go_username, go_password, input_data, label,'tabprep')
+
+    returnResult = tabclient.query('Rapidminer_Quick_Training', go_url, go_username, go_password, input_data, label,selection_criteria,max_min_crietria_selector,'tabprep')
     final_out = json_normalize(returnResult['response'])
     return final_out
 

@@ -10,8 +10,8 @@ go_password =  ''
 
 
 #values to be changed based on data
-deployment_ID = ''
-label = ''
+deployment_ID = 'ee7f1eba-2b5f-4497-a07b-de103c9df65f'
+label = 'Survived'
 PREDICTION = 'prediction('+label+')'
 
 def score(test):

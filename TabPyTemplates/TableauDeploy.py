@@ -2,9 +2,6 @@ from tabpy_client import Client
 import importlib
 
 TASK_STATE = 'state'
-CRITERIA = 'performance'
-SUB_CRITERIA = 'percentages'
-PARAM = 'accuracy'
 FINISHED_STATUS = 'FINISHED'
 ERROR_STATUS = 'ERROR'
 COMPLETE_STATUS = [FINISHED_STATUS,ERROR_STATUS]
@@ -19,15 +16,15 @@ client = ''
 tabclient = Client('http://localhost:9004/')
 #new update
 
-def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label, platform):
+def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label,selection_criteria,max_min_crietria_selector, platform):
     from rapidminer_go_python import rapidminergoclient as amw
-    LABEL_ATTRIBUTE = label
 
     # To get the AMW instance
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
 
     data = client.convert_json_to_dataframe(input_data)
-    trainingResult = client.quick_automodel(data,label,AUTODEPLOY)
+
+    trainingResult = client.quick_automodel(data,label,AUTODEPLOY,selection_criteria,max_min_crietria_selector)
 
     if platform == 'tabprep':
         return trainingResult
@@ -44,8 +41,7 @@ def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label, pla
     print('returning result')
     return prediction
 
-def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_deploy, platform):
-
+def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform):
     from rapidminer_go_python import rapidminergoclient as amw
     LABEL_ATTRIBUTE = label
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
@@ -55,7 +51,7 @@ def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,h
     # setting label
     client.set_label(modelingTaskID, LABEL_ATTRIBUTE)
     client.set_class_interest(modelingTaskID, high_value, low_value)
-    jsonVal = client.set_cost_matrix(modelingTaskID, cost_matrix)
+    client.set_cost_matrix(modelingTaskID, cost_matrix)
     print('TModeling askID:' + modelingTaskID)
 
     # Initiating model training
@@ -65,8 +61,8 @@ def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,h
     client.get_execution_result(modelingTaskID)
 
     # To find the best model**add or remove features if needed to get a value of more or less deep rooted in Json*
-    bestmodelselectioncriteria = [CRITERIA, SUB_CRITERIA, PARAM]
-    bestModel = client.determine_best_model(bestmodelselectioncriteria)
+
+    bestModel = client.determine_best_model(selection_criteria,max_min_crietria_selector)
 
     # Deploying the best model
     global depID
@@ -77,7 +73,7 @@ def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,h
 
     # Binding DeploymentID, Status and Best Model together in a dictionary to return as a output
     out_result = {DEPLOYMENT_ID: depID, STATUS: status, MODEL: bestModel}
-    final_out = client.convert_json_to_dataframe(out_result)
+    client.convert_json_to_dataframe(out_result)
     print('DeploymentID:' + str(depID))
 
     if platform == 'tabprep':
@@ -86,7 +82,6 @@ def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,h
     prediction = []
 
     # Number of records in input
-    max_length = len(data.index)
     max_data_length = len(data.index)
 
     # Adding survived to a list
@@ -127,13 +122,13 @@ def rapidminer_score(go_url, gouser, gopassword, inputScoreData, label, depID):
 
 
 
-def rapidminer_train_and_score(go_url, gouser, gopassword, input_train_data, input_score_data, label, platform):
+def rapidminer_train_and_score(go_url, gouser, gopassword, input_train_data, input_score_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform):
     # List to add the result data
     prediction = []
 
-    prediction.extend(rapidminerTrain(go_url, gouser, gopassword, input_train_data, label, platform))
+    prediction.extend(rapidminer_train(go_url, gouser, gopassword, input_train_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform))
 
-    prediction.extend(rapidminerScore(go_url, gouser, gopassword, input_score_data, label, depID))
+    prediction.extend(rapidminer_score(go_url, gouser, gopassword, input_score_data, label, depID))
     print('returning result')
     return prediction
 
