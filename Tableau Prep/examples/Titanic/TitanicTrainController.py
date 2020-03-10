@@ -6,34 +6,37 @@ import pandas as pd
 
 # Change the following values
 tabpy_serverurl = 'http://localhost:9004/'
-go_url = 'https://go-develop.rapidminer.com'
-go_username = 'bpatil@rapidminer.com'
-go_password =  'applesoranges'
+go_url = 'https://go.rapidminer.com'
+go_username = ''
+go_password = ''
 
 #values to be changed based on data
 label = 'Survived'
-cost_matrix =[[1,1],[1,1]]
+cost_matrix =[[1,-1],[-1,1]]
 high_value = 'Yes'
 low_value = 'No'
-selection_criteria = 'gain'
-should_deploy = true
+#### possible values,
+selection_criteria = 'performance_accuracy'
+max_min_crietria_selector = 'max' #or 'min'
+should_deploy = True
+platform = 'tabprep'
 
 tabclient = Client(tabpy_serverurl)
 STATUS = 'Deployment_Status'
 MODEL = 'Deployed_Model'
 DEPLOYMENT_ID = 'DeploymentID'
-
+MODELING_ID = 'Modeling_ID'
+URL = 'URL'
 
 def training(data):
-
+    print('inside controller')
     # removing rows with label values
     data = data.dropna(subset=[label])
     tabclient = Client(tabpy_serverurl)
 
-    # dataframe to json+
-    responseJSON = data.to_json(orient='records')
-    dataId = json.loads(responseJSON)
-    returnResult = tabclient.query('RapidMinerTrain', go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,should_depoly, platform):
+    # dataframe to json
+    input_data = json.loads(data.to_json(orient='records'))
+    returnResult = tabclient.query('RapidMiner_Train', go_url, go_username, go_password, input_data, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)
     final_out = json_normalize(returnResult['response'])
     return final_out
 
@@ -41,7 +44,9 @@ def training(data):
 #***Change the schema according to your result***
 def get_output_schema():
   return pd.DataFrame({
+    MODELING_ID: prep_string(),
     STATUS: prep_string(),
     DEPLOYMENT_ID: prep_string(),
-    MODEL: prep_string()
+    MODEL: prep_string(),
+    URL: prep_string()
   })

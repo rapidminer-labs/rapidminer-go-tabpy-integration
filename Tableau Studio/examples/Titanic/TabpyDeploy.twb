@@ -168,7 +168,7 @@
         </calculation>
       </column>
       <column caption='TrainDeployed' datatype='string' name='[Calculation_2846837938310324228]' role='measure' type='nominal'>
-        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;classification_error&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMiner_Train&apos;, go_url, go_username, go_password, trainJsonValue, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMiner_Train&apos;, go_url, go_username, go_password, trainJsonValue, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
@@ -369,7 +369,7 @@
       </table>
       <simple-id uuid='{E7FCEF8F-AA72-4F02-90EA-673630F0A533}' />
     </worksheet>
-    <worksheet name='Train'>
+    <worksheet lock-updates='true' name='Train'>
       <table>
         <view>
           <datasources>
@@ -378,7 +378,7 @@
           <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
             <column datatype='real' name='[Age]' role='measure' type='quantitative' />
             <column caption='TrainDeployed' datatype='string' name='[Calculation_2846837938310324228]' role='measure' type='nominal'>
-              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;classification_error&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMiner_Train&apos;, go_url, go_username, go_password, trainJsonValue, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMiner_Train&apos;, go_url, go_username, go_password, trainJsonValue, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
                 <table-calc ordering-type='Rows' />
               </calculation>
             </column>
@@ -535,7 +535,7 @@
     </worksheet>
   </worksheets>
   <windows source-height='30'>
-    <window class='worksheet' maximized='true' name='TrainAndScore'>
+    <window class='worksheet' name='TrainAndScore'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -553,11 +553,6 @@
           </strip>
           <strip size='31'>
             <card type='title' />
-          </strip>
-        </edge>
-        <edge name='right'>
-          <strip size='160'>
-            <card pane-specification-id='2' param='[federated.0jbz83q0w4bmof1e5znwe01jspvs].[usr:Calculation_2846837937960083456:nk]' type='color' />
           </strip>
         </edge>
       </cards>
@@ -582,7 +577,7 @@
       </viewpoint>
       <simple-id uuid='{DF1D6673-081C-4D5C-8995-FCD3AF0FDCD3}' />
     </window>
-    <window class='worksheet' name='Train'>
+    <window class='worksheet' maximized='true' name='Train'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -762,70 +757,89 @@
     </thumbnail>
     <thumbnail height='192' name='Train' width='144'>
       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
-      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
-      TkSuQmCC
+      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
+      0f8PJ0EaRqBDbJIAAAAASUVORK5CYII=
     </thumbnail>
     <thumbnail height='192' name='TrainAndScore' width='144'>
       iVBORw0KGgoAAAANSUhEUgAAAJAAAADACAYAAADryOpPAAAACXBIWXMAAA7DAAAOwwHHb6hk

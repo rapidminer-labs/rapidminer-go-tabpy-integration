@@ -10,18 +10,16 @@ go_password =  ''
 
 
 #values to be changed based on data
-deployment_ID = ''
+deployment_ID = '68784ac3-953f-4a9c-beb2-b00d6b065d20'
 label = 'Survived'
 PREDICTION = 'prediction('+label+')'
 
 def score(test):
-
     #removing rows with label values
     test = test[pd.isnull(test[label])]
     # dataframe to json
-    jd = test.to_json(orient='records')
-    jsonData = json.loads(jd)
-    returnResult = tabclient.query('RapidMiner_Score',go_url, go_username , go_password, jsonData, label, deployment_ID)
+    input_data = json.loads(test.to_json(orient='records'))
+    returnResult = tabclient.query('RapidMiner_Score',go_url, go_username , go_password, input_data, label, deployment_ID)
     test[PREDICTION] = returnResult['response']
     return test
 

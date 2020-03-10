@@ -9,12 +9,15 @@ DATA_ID = 'id'
 DEPLOYMENT_ID = 'DeploymentID'
 STATUS = 'Deployment_Status'
 MODEL = 'Deployed_Model'
+MODELING_ID = 'Modeling_ID'
+URL = 'URL'
 depID = ''
 AUTODEPLOY = True
 client = ''
 
 tabclient = Client('http://localhost:9004/')
 #new update
+
 
 def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label,selection_criteria,max_min_crietria_selector, platform):
     from rapidminer_go_python import rapidminergoclient as amw
@@ -71,8 +74,9 @@ def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,h
     if str(depID) != '':
         status = 'Success'
 
+    url_result = client.SERVER + '/am/modeling/' + str(modelingTaskID) + '/results'
     # Binding DeploymentID, Status and Best Model together in a dictionary to return as a output
-    out_result = {DEPLOYMENT_ID: depID, STATUS: status, MODEL: bestModel}
+    out_result = {MODELING_ID: modelingTaskID, DEPLOYMENT_ID: depID, STATUS: status, MODEL: bestModel, URL: url_result}
     client.convert_json_to_dataframe(out_result)
     print('DeploymentID:' + str(depID))
 
@@ -92,11 +96,12 @@ def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,h
     return prediction
 
 def rapidminer_score(go_url, gouser, gopassword, inputScoreData, label, depID):
+    print('Inside Score Method, DeploymentID ' + depID)
     from rapidminer_go_python import rapidminergoclient as amw
     global client
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
 
-    print('Inside Score Method, DeploymentID '+str(depID))
+
     PREDICTION = 'prediction(' + label + ')'
 
 

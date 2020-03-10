@@ -12,16 +12,17 @@ go_username = ''
 go_password = ''
 
 #values to be changed based on data
-label = 'Survived'
+label = ''
 tabclient = Client(tabpy_serverurl)
 
-selection_criteria = 'classification_error'
+selection_criteria = '' #performance_accuracy/
 max_min_crietria_selector = 'max' #or 'min'
 
 STATUS = 'Deployment_Status'
 MODEL = 'Deployed_Model'
 DEPLOYMENT_ID = 'DeploymentID'
-
+MODELING_ID = 'Modeling_ID'
+URL = 'URL'
 
 def quick_training(training_data):
 
@@ -41,7 +42,9 @@ def quick_training(training_data):
 #***Change the schema according to your result***
 def get_output_schema():
   return pd.DataFrame({
+    MODELING_ID: prep_string(),
     STATUS: prep_string(),
     DEPLOYMENT_ID: prep_string(),
-    MODEL: prep_string()
+    MODEL: prep_string(),
+    URL: prep_string()
   })
