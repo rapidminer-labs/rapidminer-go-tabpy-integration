@@ -10,7 +10,7 @@ go_password =  ''
 
 
 #values to be changed based on data
-deployment_ID = '68784ac3-953f-4a9c-beb2-b00d6b065d20'
+deployment_ID = ''
 label = 'Survived'
 PREDICTION = 'prediction('+label+')'
 
