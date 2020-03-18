@@ -16,10 +16,9 @@ AUTODEPLOY = True
 client = ''
 
 tabclient = Client('http://localhost:9004/')
-#new update
 
 
-def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label,selection_criteria,max_min_crietria_selector, platform):
+def rapidminer_quick_training(go_url, gouser, gopassword, file_name, input_data, label,selection_criteria,max_min_crietria_selector, platform):
     from rapidminer_go_python import rapidminergoclient as amw
 
     # To get the AMW instance
@@ -27,7 +26,7 @@ def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label,sele
 
     data = client.convert_json_to_dataframe(input_data)
 
-    trainingResult = client.quick_automodel(data,label,AUTODEPLOY,selection_criteria,max_min_crietria_selector)
+    trainingResult = client.quick_automodel(input_data,label,AUTODEPLOY,selection_criteria,max_min_crietria_selector, file_name)
 
     if platform == 'tabprep':
         return trainingResult
@@ -44,12 +43,12 @@ def rapidminer_quick_training(go_url, gouser, gopassword, input_data, label,sele
     print('returning result')
     return prediction
 
-def rapidminer_train(go_url, gouser, gopassword, input_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform):
+def rapidminer_train(go_url, gouser, gopassword, file_name, input_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform):
     from rapidminer_go_python import rapidminergoclient as amw
     LABEL_ATTRIBUTE = label
     client = amw.RapidMinerGoClient(go_url, gouser, gopassword)
     data = client.convert_json_to_dataframe(input_data)
-    dataId = client.add_dataFrame(data)[DATA_ID]
+    dataId = client.upload_json(input_data, file_name)[DATA_ID]
     modelingTaskID = client.create_modeling_task(dataId)[DATA_ID]
     # setting label
     client.set_label(modelingTaskID, LABEL_ATTRIBUTE)
@@ -127,11 +126,11 @@ def rapidminer_score(go_url, gouser, gopassword, inputScoreData, label, depID):
 
 
 
-def rapidminer_train_and_score(go_url, gouser, gopassword, input_train_data, input_score_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform):
+def rapidminer_train_and_score(go_url, gouser, gopassword, file_name, input_train_data, input_score_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform):
     # List to add the result data
     prediction = []
 
-    prediction.extend(rapidminer_train(go_url, gouser, gopassword, input_train_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform))
+    prediction.extend(rapidminer_train(go_url, gouser, gopassword, file_name, input_train_data, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, platform))
 
     prediction.extend(rapidminer_score(go_url, gouser, gopassword, input_score_data, label, depID))
     print('returning result')

@@ -12,6 +12,7 @@ go_password = ''
 
 #values to be changed based on data
 label = ''
+file_name = ''
 cost_matrix =[[1,-1],[-1,1]]
 high_value = 'Yes'
 low_value = 'No'
@@ -36,7 +37,7 @@ def training(data):
 
     # dataframe to json
     input_data = json.loads(data.to_json(orient='records'))
-    returnResult = tabclient.query('RapidMiner_Train', go_url, go_username, go_password, input_data, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)
+    returnResult = tabclient.query('RapidMiner_Train', go_url, go_username, go_password, file_name, input_data, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)
     final_out = json_normalize(returnResult['response'])
     return final_out
 
