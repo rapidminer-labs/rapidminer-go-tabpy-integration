@@ -13,7 +13,7 @@ go_password = ''
 
 #values to be changed based on data
 label = ''
-file_name = ''
+analysis_name = ''
 tabclient = Client(tabpy_serverurl)
 
 #selection_criteria possible values -- performance_accuracy/performance_recall/performance_specificity/performance_sensitivity/performance_classification_error/performance_AUC/performance_precision
@@ -37,7 +37,7 @@ def quick_training(training_data):
     responseJSON = training_data.to_json(orient='records')
     input_data = json.loads(responseJSON)
 
-    returnResult = tabclient.query('Rapidminer_Quick_Training', go_url, go_username, go_password, file_name, input_data, label,selection_criteria,max_min_crietria_selector,'tabprep')
+    returnResult = tabclient.query('Rapidminer_Quick_Training', go_url, go_username, go_password, analysis_name, input_data, label,selection_criteria,max_min_crietria_selector,'tabprep')
     final_out = json_normalize(returnResult['response'])
     return final_out
 
