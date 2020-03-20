@@ -148,7 +148,7 @@
       </connection>
       <aliases enabled='yes' />
       <column caption='QuickTrain' datatype='string' name='[Calculation_1924725917076062209]' role='measure' type='nominal'>
-        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;selection_criteria = &apos;classification_error&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;label = &apos;Survived&apos;&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;input_data = json.loads(responseJSON)&#13;&#10;print(data)&#13;&#10;&#13;&#10;returnResult = tabclient.query(&apos;Rapidminer_Quick_Training&apos;, go_url, go_username, go_password, input_data, label,selection_criteria,max_min_crietria_selector,&apos;tabclient&apos;)&#13;&#10;print(returnResult[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;label = &apos;Survived&apos;&#13;&#10;analysis_name = &apos;Titanic&apos;&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;input_data = json.loads(responseJSON)&#13;&#10;print(data)&#13;&#10;&#13;&#10;returnResult = tabclient.query(&apos;Rapidminer_Quick_Training&apos;, go_url, go_username, go_password, analysis_name, input_data, label,selection_criteria,max_min_crietria_selector,&apos;tabclient&apos;)&#13;&#10;print(returnResult[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
@@ -158,17 +158,17 @@
         </calculation>
       </column>
       <column caption='TrainScoreDeploy' datatype='string' name='[Calculation_2846837937960083456]' role='measure' type='nominal'>
-        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;classification_error&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;scoredataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;scoredataframe[&apos;Age&apos;] = scoredataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Siblings&apos;] = scoredataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Parents&apos;] = scoredataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Fair&apos;] = scoredataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe = scoredataframe[pd.isnull(scoredataframe[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;scoreJsonConversion = scoredataframe.to_json(orient=&apos;records&apos;)&#13;&#10;scoreJsonValue = json.loads(scoreJsonConversion)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainAndPredictionList = tabclient.query(&apos;RapidMiner_Train_And_Score&apos;, go_url,go_username, go_password, trainJsonValue, scoreJsonValue, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, &apos;tableauclient&apos;)&#13;&#10;print(trainAndPredictionList[&apos;response&apos;])&#13;&#10; &#13;&#10;return trainAndPredictionList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;analysis_name = &apos;Titanic&apos;&#13;&#10;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;scoredataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;scoredataframe[&apos;Age&apos;] = scoredataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Siblings&apos;] = scoredataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Parents&apos;] = scoredataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Fair&apos;] = scoredataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe = scoredataframe[pd.isnull(scoredataframe[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;scoreJsonConversion = scoredataframe.to_json(orient=&apos;records&apos;)&#13;&#10;scoreJsonValue = json.loads(scoreJsonConversion)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainAndPredictionList = tabclient.query(&apos;RapidMiner_Train_And_Score&apos;, go_url,go_username, go_password, analysis_name, trainJsonValue, scoreJsonValue, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, &apos;tableauclient&apos;)&#13;&#10;print(trainAndPredictionList[&apos;response&apos;])&#13;&#10; &#13;&#10;return trainAndPredictionList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
       <column caption='ScoreDeploy' datatype='string' name='[Calculation_2846837938047246338]' role='measure' type='nominal'>
-        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;deployment_ID = &apos;ee7f1eba-2b5f-4497-a07b-de103c9df65f&apos;&#13;&#10;label = &apos;Survived&apos;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonDataOfInputTest = json.loads(jd)&#13;&#10;&#13;&#10;&#13;&#10;predictedList = tabclient.query(&apos;RapidMiner_Score&apos;,go_url, go_username, go_password, jsonDataOfInputTest, label, deployment_ID)&#13;&#10;print(predictedList[&apos;response&apos;])&#13;&#10;&#13;&#10;return predictedList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;deployment_ID = &apos;869ce15f-f357-4ce6-b9ed-a6cbe49d516b&apos;&#13;&#10;label = &apos;Survived&apos;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonDataOfInputTest = json.loads(jd)&#13;&#10;&#13;&#10;&#13;&#10;predictedList = tabclient.query(&apos;RapidMiner_Score&apos;,go_url, go_username, go_password, jsonDataOfInputTest, label, deployment_ID)&#13;&#10;print(predictedList[&apos;response&apos;])&#13;&#10;&#13;&#10;return predictedList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
       <column caption='TrainDeployed' datatype='string' name='[Calculation_2846837938310324228]' role='measure' type='nominal'>
-        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMiner_Train&apos;, go_url, go_username, go_password, trainJsonValue, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+        <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;analysis_name = &apos;Titanic&apos;&#13;&#10;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMiner_Train&apos;, go_url, go_username, go_password, analysis_name, trainJsonValue, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
           <table-calc ordering-type='Rows' />
         </calculation>
       </column>
@@ -313,7 +313,7 @@
     </datasource>
   </datasources>
   <worksheets>
-    <worksheet name='Score'>
+    <worksheet lock-updates='true' name='Score'>
       <table>
         <view>
           <datasources>
@@ -322,7 +322,7 @@
           <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
             <column datatype='real' name='[Age]' role='measure' type='quantitative' />
             <column caption='ScoreDeploy' datatype='string' name='[Calculation_2846837938047246338]' role='measure' type='nominal'>
-              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;deployment_ID = &apos;ee7f1eba-2b5f-4497-a07b-de103c9df65f&apos;&#13;&#10;label = &apos;Survived&apos;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonDataOfInputTest = json.loads(jd)&#13;&#10;&#13;&#10;&#13;&#10;predictedList = tabclient.query(&apos;RapidMiner_Score&apos;,go_url, go_username, go_password, jsonDataOfInputTest, label, deployment_ID)&#13;&#10;print(predictedList[&apos;response&apos;])&#13;&#10;&#13;&#10;return predictedList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;deployment_ID = &apos;869ce15f-f357-4ce6-b9ed-a6cbe49d516b&apos;&#13;&#10;label = &apos;Survived&apos;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;&#13;&#10;test = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;test[&apos;Age&apos;] = test[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Siblings&apos;] = test[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Parents&apos;] = test[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;test[&apos;Fair&apos;] = test[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;test = test[pd.isnull(test[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;jd = test.to_json(orient=&apos;records&apos;)&#13;&#10;jsonDataOfInputTest = json.loads(jd)&#13;&#10;&#13;&#10;&#13;&#10;predictedList = tabclient.query(&apos;RapidMiner_Score&apos;,go_url, go_username, go_password, jsonDataOfInputTest, label, deployment_ID)&#13;&#10;print(predictedList[&apos;response&apos;])&#13;&#10;&#13;&#10;return predictedList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
                 <table-calc ordering-type='Rows' />
               </calculation>
             </column>
@@ -356,6 +356,7 @@
             <mark class='Shape' />
             <encodings>
               <color column='[federated.0jbz83q0w4bmof1e5znwe01jspvs].[usr:Calculation_2846837938047246338:nk]' />
+              <shape column='[federated.0jbz83q0w4bmof1e5znwe01jspvs].[usr:Calculation_2846837938047246338:nk]' />
             </encodings>
             <style>
               <style-rule element='mark'>
@@ -378,7 +379,7 @@
           <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
             <column datatype='real' name='[Age]' role='measure' type='quantitative' />
             <column caption='TrainDeployed' datatype='string' name='[Calculation_2846837938310324228]' role='measure' type='nominal'>
-              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMiner_Train&apos;, go_url, go_username, go_password, trainJsonValue, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;analysis_name = &apos;Titanic&apos;&#13;&#10;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainLableList = tabclient.query(&apos;RapidMiner_Train&apos;, go_url, go_username, go_password, analysis_name, trainJsonValue, label,cost_matrix,high_value,low_value,selection_criteria, max_min_crietria_selector, platform)&#13;&#10;print(trainLableList[&apos;response&apos;])&#13;&#10;&#13;&#10;return trainLableList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
                 <table-calc ordering-type='Rows' />
               </calculation>
             </column>
@@ -437,7 +438,7 @@
           <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
             <column datatype='real' name='[Age]' role='measure' type='quantitative' />
             <column caption='TrainScoreDeploy' datatype='string' name='[Calculation_2846837937960083456]' role='measure' type='nominal'>
-              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;classification_error&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;scoredataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;scoredataframe[&apos;Age&apos;] = scoredataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Siblings&apos;] = scoredataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Parents&apos;] = scoredataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Fair&apos;] = scoredataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe = scoredataframe[pd.isnull(scoredataframe[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;scoreJsonConversion = scoredataframe.to_json(orient=&apos;records&apos;)&#13;&#10;scoreJsonValue = json.loads(scoreJsonConversion)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainAndPredictionList = tabclient.query(&apos;RapidMiner_Train_And_Score&apos;, go_url,go_username, go_password, trainJsonValue, scoreJsonValue, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, &apos;tableauclient&apos;)&#13;&#10;print(trainAndPredictionList[&apos;response&apos;])&#13;&#10; &#13;&#10;return trainAndPredictionList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;import json&#13;&#10;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;tabclient = Client(&apos;http://localhost:9004/&apos;)&#13;&#10;&#13;&#10;#values to be changed based on data&#13;&#10;label = &apos;Survived&apos;&#13;&#10;cost_matrix =[[1,-1],[-1,1]]&#13;&#10;high_value = &apos;Yes&apos;&#13;&#10;low_value = &apos;No&apos;&#13;&#10;#### possible values, &#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;analysis_name = &apos;Titanic&apos;&#13;&#10;&#13;&#10;platform = &apos;tabclient&apos;&#13;&#10;&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;traindataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;traindataframe[&apos;Age&apos;] = traindataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Siblings&apos;] = traindataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Parents&apos;] = traindataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe[&apos;Fair&apos;] = traindataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;traindataframe = traindataframe.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;scoredataframe = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;scoredataframe[&apos;Age&apos;] = scoredataframe[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Siblings&apos;] = scoredataframe[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Parents&apos;] = scoredataframe[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe[&apos;Fair&apos;] = scoredataframe[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;scoredataframe = scoredataframe[pd.isnull(scoredataframe[&apos;Survived&apos;])]&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;scoreJsonConversion = scoredataframe.to_json(orient=&apos;records&apos;)&#13;&#10;scoreJsonValue = json.loads(scoreJsonConversion)&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;trainJsonConversion = traindataframe.to_json(orient=&apos;records&apos;)&#13;&#10;trainJsonValue = json.loads(trainJsonConversion)&#13;&#10;&#13;&#10;&#13;&#10;trainAndPredictionList = tabclient.query(&apos;RapidMiner_Train_And_Score&apos;, go_url,go_username, go_password, analysis_name, trainJsonValue, scoreJsonValue, label,cost_matrix,high_value,low_value,selection_criteria,max_min_crietria_selector, &apos;tableauclient&apos;)&#13;&#10;print(trainAndPredictionList[&apos;response&apos;])&#13;&#10; &#13;&#10;return trainAndPredictionList[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
                 <table-calc ordering-type='Rows' />
               </calculation>
             </column>
@@ -488,7 +489,7 @@
           <datasource-dependencies datasource='federated.0jbz83q0w4bmof1e5znwe01jspvs'>
             <column datatype='real' name='[Age]' role='measure' type='quantitative' />
             <column caption='QuickTrain' datatype='string' name='[Calculation_1924725917076062209]' role='measure' type='nominal'>
-              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;selection_criteria = &apos;classification_error&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;label = &apos;Survived&apos;&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;input_data = json.loads(responseJSON)&#13;&#10;print(data)&#13;&#10;&#13;&#10;returnResult = tabclient.query(&apos;Rapidminer_Quick_Training&apos;, go_url, go_username, go_password, input_data, label,selection_criteria,max_min_crietria_selector,&apos;tabclient&apos;)&#13;&#10;print(returnResult[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
+              <calculation class='tableau' formula='SCRIPT_STR(&#13;&#10;&quot;&#13;&#10;import os&#13;&#10;import sys&#13;&#10;import pandas as pd&#13;&#10;from tabpy_client import Client&#13;&#10;&#13;&#10;# Change the following values&#13;&#10;tabpy_serverurl = &apos;http://localhost:9004/&apos;&#13;&#10;&#13;&#10;go_url = &apos;https://go.rapidminer.com&apos;&#13;&#10;go_username = &apos;&apos;&#13;&#10;go_password =  &apos;&apos;&#13;&#10;tabclient = Client(tabpy_serverurl)&#13;&#10;&#13;&#10;selection_criteria = &apos;performance_accuracy&apos;&#13;&#10;max_min_crietria_selector = &apos;max&apos; #or &apos;min&apos;&#13;&#10;label = &apos;Survived&apos;&#13;&#10;analysis_name = &apos;Titanic&apos;&#13;&#10;&#13;&#10;import tabpy&#13;&#10;import json&#13;&#10;&#13;&#10;Survived = _arg1&#13;&#10;Age = _arg2&#13;&#10;Passenger = _arg3&#13;&#10;Sex = _arg4&#13;&#10;Siblings = _arg5&#13;&#10;Parents = _arg6&#13;&#10;Fair = _arg7&#13;&#10;&#13;&#10;data = pd.DataFrame(&#13;&#10;    {&apos;Survived&apos;: Survived, &apos;Age&apos;: Age, &apos;Passenger&apos;: Passenger, &apos;Sex&apos;: Sex, &apos;Siblings&apos;: Siblings, &apos;Parents&apos;: Parents,&#13;&#10;     &apos;Fair&apos;: Fair})&#13;&#10;data[&apos;Age&apos;] = data[&apos;Age&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Siblings&apos;] = data[&apos;Siblings&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Parents&apos;] = data[&apos;Parents&apos;].astype(&apos;float64&apos;)&#13;&#10;data[&apos;Fair&apos;] = data[&apos;Fair&apos;].astype(&apos;float64&apos;)&#13;&#10;data = data.dropna(subset=[&apos;Survived&apos;])&#13;&#10;&#13;&#10;&#13;&#10;# dataframe to json&#13;&#10;responseJSON = data.to_json(orient=&apos;records&apos;)&#13;&#10;input_data = json.loads(responseJSON)&#13;&#10;print(data)&#13;&#10;&#13;&#10;returnResult = tabclient.query(&apos;Rapidminer_Quick_Training&apos;, go_url, go_username, go_password, analysis_name, input_data, label,selection_criteria,max_min_crietria_selector,&apos;tabclient&apos;)&#13;&#10;print(returnResult[&apos;response&apos;])&#13;&#10;&#13;&#10;return returnResult[&apos;response&apos;]&#13;&#10;&quot;,&#13;&#10;ATTR([Survived]),ATTR([Age]),ATTR([Passenger]),ATTR([Sex]),ATTR([Siblings]),ATTR([Parents]),ATTR([Fair]))'>
                 <table-calc ordering-type='Rows' />
               </calculation>
             </column>
@@ -577,7 +578,7 @@
       </viewpoint>
       <simple-id uuid='{DF1D6673-081C-4D5C-8995-FCD3AF0FDCD3}' />
     </window>
-    <window class='worksheet' maximized='true' name='Train'>
+    <window class='worksheet' name='Train'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -613,7 +614,7 @@
       </viewpoint>
       <simple-id uuid='{8DBB4310-A28F-4B3F-857F-58E432197BBE}' />
     </window>
-    <window class='worksheet' name='Score'>
+    <window class='worksheet' maximized='true' name='Score'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -636,6 +637,7 @@
         <edge name='right'>
           <strip size='160'>
             <card pane-specification-id='0' param='[federated.0jbz83q0w4bmof1e5znwe01jspvs].[usr:Calculation_2846837938047246338:nk]' type='color' />
+            <card pane-specification-id='0' param='[federated.0jbz83q0w4bmof1e5znwe01jspvs].[usr:Calculation_2846837938047246338:nk]' type='shape' />
           </strip>
         </edge>
       </cards>
@@ -689,157 +691,137 @@
   <thumbnails>
     <thumbnail height='192' name='Score' width='144'>
       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
-      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
-      AAAAAElFTkSuQmCC
+      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
+      iDPt0dKXvAEAAAAASUVORK5CYII=
     </thumbnail>
     <thumbnail height='192' name='Train' width='144'>
       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
-      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
-      0f8PJ0EaRqBDbJIAAAAASUVORK5CYII=
+      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
+      TkSuQmCC
     </thumbnail>
     <thumbnail height='192' name='TrainAndScore' width='144'>
       iVBORw0KGgoAAAANSUhEUgAAAJAAAADACAYAAADryOpPAAAACXBIWXMAAA7DAAAOwwHHb6hk
