@@ -6,7 +6,7 @@ import pandas as pd
 tabclient = Client('http://localhost:9004/')
 go_url = 'https://go.rapidminer.com'
 go_username = ''
-go_password =  ''
+go_password = ''
 
 
 #values to be changed based on data
@@ -16,7 +16,8 @@ PREDICTION = 'prediction('+label+')'
 
 def score(test):
     #removing rows with label values
-    test = test[pd.isnull(test[label])]
+    if label in test :
+        test = test[pd.isnull(test[label])]
     # dataframe to json
     input_data = json.loads(test.to_json(orient='records'))
     returnResult = tabclient.query('RapidMiner_Score',go_url, go_username , go_password, input_data, label, deployment_ID)
